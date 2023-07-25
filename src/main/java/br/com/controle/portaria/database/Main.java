@@ -11,7 +11,7 @@ public class Main {
 		GenericDao<TipoPessoa> dao = new GenericDao<TipoPessoa>();
 		
 		TipoPessoa tipoPessoaInsert = new TipoPessoa();
-		tipoPessoaInsert.setDescricao("Entregador2");		
+		tipoPessoaInsert.setDescricao("Porteiro");		
 		dao.adicionarOrAlterar(tipoPessoaInsert);
 		
 		GenericDao<TipoPessoa> daoList = new GenericDao<TipoPessoa>();
