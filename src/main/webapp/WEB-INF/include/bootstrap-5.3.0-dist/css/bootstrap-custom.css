@@ -1,0 +1,27 @@
+@CHARSET "UTF-8";
+
+.navbar-inverse {
+	background-color: #0066ff;
+	border-color: #0066ff;
+	background-image: linear-gradient(to bottom, rgba(25, 77, 156, 1) 0px, #1D1717 100%);
+}
+
+/* Acerta espaços entre linhas */
+.top-buffer5 		{ margin-top:5px; }
+.top-buffer15 		{ margin-top:15px; }
+.top-buffer25 		{ margin-top:25px; }
+.top-buffer50 		{ margin-top:50px; }
+.top-buffer100 		{ margin-top:100px; }
+.bottom-buffer5 	{ margin-bottom:5px; }
+.bottom-buffer15 	{ margin-bottom:15px; }
+.bottom-buffer25 	{ margin-bottom:25px; }
+.bottom-buffer50 	{ margin-bottom:50px; }
+.bottom-buffer100	{ margin-bottom:100px; }
+
+.input-fixed-width50 { min-width:50px; text-align:left;}
+.input-fixed-width75 { min-width:75px; text-align:left;}
+.input-fixed-width100 { min-width:100px; text-align:left;}
+.input-fixed-width125 { min-width:125px; text-align:left;}
+.input-fixed-width150 { min-width:150px; text-align:left;}
+.input-fixed-width200 { min-width:200px; text-align:left;}
+.input-fixed-width300 { min-width:300px; text-align:left;}

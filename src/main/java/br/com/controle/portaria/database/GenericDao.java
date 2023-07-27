@@ -28,6 +28,10 @@ public class GenericDao<T>{
     	this.session.close();
     }
     
+    public boolean isSessionClosed() {
+    	return !this.session.isOpen();
+    }
+    
 	public void salva(T objeto) {		
 		Transaction tx = this.session.beginTransaction();
 		try{
@@ -155,7 +159,7 @@ public class GenericDao<T>{
             
 		try{			    
 			this.session.saveOrUpdate(objeto);	
-		    tx.commit();		    
+		    tx.commit();
 		    
 		}catch(HibernateException he){			
 			he.printStackTrace();
