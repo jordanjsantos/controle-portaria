@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import br.com.controle.portaria.database.GenericDao;
+import br.com.controle.portaria.model.Pessoa;
 import br.com.controle.portaria.model.TipoPessoa;
 
 @Controller
@@ -40,13 +41,18 @@ public class TipoPessoaController implements InterfaceCadastroController<TipoPes
 	public String listar(Model model) {
 		System.out.println(this.getClass().getName() + "#############listar#########");
 
-		GenericDao<TipoPessoa> dao = getInstance();		
-		List<TipoPessoa> listaTipoPessoa = new ArrayList<TipoPessoa>();
-		listaTipoPessoa = dao.listaTudo("from TipoPessoa");
+		List<TipoPessoa> listaTipoPessoa = getListaTipoPessoa();
 		
 		model.addAttribute("listTipoPessoa", listaTipoPessoa);		
 				
 		return "cadastroTipoPessoaForm";
+	}
+	
+	public List<TipoPessoa> getListaTipoPessoa() {
+		GenericDao<TipoPessoa> dao = getInstance();		
+		List<TipoPessoa> listaTipoPessoa = new ArrayList<TipoPessoa>();
+		listaTipoPessoa = dao.listaTudo("from TipoPessoa");		
+		return listaTipoPessoa;
 	}
 
 	@Override
@@ -87,13 +93,13 @@ public class TipoPessoaController implements InterfaceCadastroController<TipoPes
 		Collection<TipoPessoa> listaTipoPessoa = new ArrayList<TipoPessoa>();	
 		
 		for(Integer i : cds ){			
-			TipoPessoa bairro = new TipoPessoa();			
+			TipoPessoa tipoPessoa = new TipoPessoa();			
 			if(i != null){
 				dao = getInstance();	
-				bairro = dao.carrega(i, TipoPessoa.class);				
+				tipoPessoa = dao.carrega(i, TipoPessoa.class);				
 			}				
-			if(!bairro.equals(null)){
-				listaTipoPessoa.add(bairro);
+			if(!tipoPessoa.equals(null)){
+				listaTipoPessoa.add(tipoPessoa);
 			}			
 		}	
 		dao = getInstance();	

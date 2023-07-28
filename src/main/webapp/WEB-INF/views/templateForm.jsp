@@ -34,7 +34,8 @@
 										Cadastro </a>
 									<ul class="dropdown-menu" aria-labelledby="navbarDropdown">
 										<li><a class="dropdown-item" href="/controle_portaria/tipoPessoa">Tipo Pessoa</a></li>
-										<li><a class="dropdown-item" href="#">Veículo</a></li>
+										<li><a class="dropdown-item" href="/controle_portaria/pessoa">Pessoa</a></li>
+										<li><a class="dropdown-item" href="/controle_portaria/veiculo">Veículo</a></li>
 										<li><hr class="dropdown-divider"></li>
 										<li><a class="dropdown-item" href="#">Imóvel Condomínio</a></li>
 									</ul></li>								
