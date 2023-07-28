@@ -33,6 +33,10 @@
 				$('#formId').prop('action',"/controle_portaria/excluirPessoa");
 				$('#formId').submit();
 			});
+			
+			new DataTable('#idTablePessoa', {
+			    pagingType: 'full_numbers'
+			});
 		    
 		});		
 	</script>	
@@ -113,9 +117,9 @@
 					</div>		
 
 					<div class="row top-buffer25">
-						<div class="col-3"></div>
-						<div class="col-5">
-							<table id="idContaLista"
+						<div class="col-2"></div>
+						<div class="col-8">
+							<table id="idTablePessoa"
 								class="table table-bordered table-striped ">
 								<thead class="table-dark">
 									<tr>

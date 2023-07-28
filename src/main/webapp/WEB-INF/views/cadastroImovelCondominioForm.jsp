@@ -24,17 +24,17 @@
 			
 			$("#idSalvar").click(function(){
 				if(validaCamposSalvar()){
-					$('#formId').prop('action',"/controle_portaria/salvarVeiculo");
+					$('#formId').prop('action',"/controle_portaria/salvarImovelCondominio");
 			    	$('#formId').submit();
 				}		    	
 		    }); 
 			
 			$("#idExcluir").click(function(){
-				$('#formId').prop('action',"/controle_portaria/excluirVeiculo");
+				$('#formId').prop('action',"/controle_portaria/excluirImovelCondominio");
 				$('#formId').submit();
 			});
 			
-			new DataTable('#idTableVeiculo', {
+			new DataTable('#idTableImovelCondominio', {
 			    pagingType: 'full_numbers'
 			});
 		    
@@ -49,52 +49,25 @@
 					<div class="row top-buffer5">
 						<div class="col-3"></div>
 						<div class="col-5">
-							<legend class="titulo">Lista de Veículos</legend>
+							<legend class="titulo">Lista de Imóveis Condomínio</legend>
 						</div>
 					</div>
 					<div class="row top-buffer15">
 						<div class="col-3"></div>
 						<div class="col-2">
 							<div class="input-group">
-								<span class="input-group-addon input-fixed-width75">Cod</span>
-								<input type="text" name="id" class="form-control inputInsert" maxlength="5" value="${veiculo.id}" disabled="disabled">
-								<input type="hidden" name="id" class="inputInsert" value="${veiculo.id}">
+								<span class="input-group-addon input-fixed-width100">Cod</span>
+								<input type="text" name="id" class="form-control inputInsert" maxlength="5" value="${imovelCondominio.id}" disabled="disabled">
+								<input type="hidden" name="id" class="inputInsert" value="${imovelCondominio.id}">
 							</div>						
 						</div>							
 					</div>	
 					<div class="row top-buffer15">
 						<div class="col-3"></div>
-						<div class="col-3">
+						<div class="col-4">
 							<div class="input-group">
-								<span class="input-group-addon input-fixed-width75 ">Marca</span>
-								<input type="text" name="marca" class="form-control inputInsert cpObrigatorio" maxlength="100" value="${veiculo.marca}" >
-							</div>
-						</div>
-					</div>
-					<div class="row top-buffer15">
-						<div class="col-3"></div>
-						<div class="col-3">
-							<div class="input-group">
-								<span class="input-group-addon input-fixed-width75 ">Modelo</span>
-								<input type="text" name="modelo" class="form-control inputInsert cpObrigatorio " maxlength="150" value="${veiculo.modelo}" >
-							</div>
-						</div>
-					</div>
-					<div class="row top-buffer15">
-						<div class="col-3"></div>
-						<div class="col-2">
-							<div class="input-group">
-								<span class="input-group-addon input-fixed-width75">Cor</span>
-								<input type="text" name="cor" class="form-control inputInsert " maxlength="8" value="${veiculo.cor}" >
-							</div>
-						</div>
-					</div>
-					<div class="row top-buffer15">
-						<div class="col-3"></div>
-						<div class="col-2">
-							<div class="input-group">
-								<span class="input-group-addon input-fixed-width75 ">Placa</span>
-								<input type="text" name="placa" class="form-control inputInsert cpObrigatorio" maxlength="8" value="${veiculo.placa}" >
+								<span class="input-group-addon input-fixed-width100 ">Descrição</span>
+								<input type="text" name="descricao" class="form-control inputInsert cpObrigatorio" maxlength="150" value="${imovelCondominio.descricao}" >
 							</div>
 						</div>
 					</div>
@@ -102,12 +75,39 @@
 						<div class="col-3"></div>
 						<div class="col-5">
 							<div class="input-group">
-								<span class="input-group-addon input-fixed-width75">Pessoa</span>
+								<span class="input-group-addon input-fixed-width100 ">Logradouro</span>
+								<input type="text" name="logradouro" class="form-control inputInsert cpObrigatorio " maxlength="200" value="${imovelCondominio.logradouro}" >
+							</div>
+						</div>
+					</div>
+					<div class="row top-buffer15">
+						<div class="col-3"></div>
+						<div class="col-4">
+							<div class="input-group">
+								<span class="input-group-addon input-fixed-width100">Cidade</span>
+								<input type="text" name="cidade" class="form-control inputInsert " maxlength="100" value="${imovelCondominio.cidade}" >
+							</div>
+						</div>
+					</div>
+					<div class="row top-buffer15">
+						<div class="col-3"></div>
+						<div class="col-2">
+							<div class="input-group">
+								<span class="input-group-addon input-fixed-width100 ">UF</span>
+								<input type="text" name="uf" class="form-control inputInsert cpObrigatorio" maxlength="2" value="${imovelCondominio.uf}" >
+							</div>
+						</div>
+					</div>
+					<div class="row top-buffer15">
+						<div class="col-3"></div>
+						<div class="col-5">
+							<div class="input-group">
+								<span class="input-group-addon input-fixed-width100">Pessoa</span>
 								<select class="form-select inputInsert cpObrigatorio" aria-label="Default select example" name="pessoa.id">
 								  	<option selected>Selecione uma Pessoa</option>
 								  	<c:forEach items="${listPessoa}" var="pessoa">
 										<option value="${pessoa.id}" 
-											<c:if test="${veiculo.pessoa.id eq pessoa.id}">
+											<c:if test="${imovelCondominio.pessoa.id eq pessoa.id}">
 								   				selected="selected"
 								   			</c:if>
 								   		>${pessoa.nome}</option>								   		
@@ -128,7 +128,7 @@
 					<div class="row top-buffer25">
 						<div class="col-2"></div>
 						<div class="col-7">
-							<table id="idTableVeiculo"
+							<table id="idTableImovelCondominio"
 								class="table table-bordered table-striped ">
 								<thead class="table-dark">
 									<tr>
@@ -136,27 +136,27 @@
 											<input type="checkbox" id="idSelecionaTodos">
 										</th>
 										<th class="display-th">Id</th>
-										<th class="display-th">Marca</th>
-										<th class="display-th">Modelo</th>
-										<th class="display-th">Cor</th>
-										<th class="display-th">Placa</th>
+										<th class="display-th">Descrição</th>
+										<th class="display-th">Logradouro</th>
+										<th class="display-th">Cidade</th>
+										<th class="display-th">UF</th>
 										<th class="display-th">Proprietário</th>
 									</tr>
 								</thead>
 								<tbody>
-									<c:forEach items="${listVeiculo}" var="veiculo">
+									<c:forEach items="${listImovelCondominio}" var="imovelCondominio">
 										<tr>
 											<td class="text-center">
-												<input type="checkbox" name="cds" value="${veiculo.id}" class="check">
+												<input type="checkbox" name="cds" value="${imovelCondominio.id}" class="check">
 											</td>	
 											<td>
-												<a href="/controle_portaria/carregarVeiculo?idVeiculo=${veiculo.id}">${veiculo.id}</a>
+												<a href="/controle_portaria/carregarImovelCondominio?idImovelCondominio=${imovelCondominio.id}">${imovelCondominio.id}</a>
 											</td>										
-											<td class="text-center">${veiculo.marca}</td>	
-											<td class="text-center">${veiculo.modelo}</td>	
-											<td class="text-center">${veiculo.cor}</td>
-											<td class="text-center">${veiculo.placa}</td>
-											<td class="text-center">${veiculo.pessoa.nome}</td>
+											<td class="text-center">${imovelCondominio.descricao}</td>	
+											<td class="text-center">${imovelCondominio.logradouro}</td>	
+											<td class="text-center">${imovelCondominio.cidade}</td>
+											<td class="text-center">${imovelCondominio.uf}</td>
+											<td class="text-center">${imovelCondominio.pessoa.nome}</td>
 										</tr>
 									</c:forEach>
 								</tbody>

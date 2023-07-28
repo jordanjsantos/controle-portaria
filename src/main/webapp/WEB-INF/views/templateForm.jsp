@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -9,10 +9,14 @@
 	rel="stylesheet">
 <link href='<c:url value="/include/bootstrap-5.3.0-dist/css/bootstrap-custom.css" />'
 	rel="stylesheet">	
+<link href='<c:url value="/include/data-table/jquery.dataTables.min.css" />'
+	rel="stylesheet">	
 
 <script src='<c:url value="/include/bootstrap-5.3.0-dist/js/bootstrap.min.js" />'></script>
 <script src='<c:url value="/include/bootstrap-5.3.0-dist/js/bootstrap.bundle.min.js" />'></script>
 <script src='<c:url value="/include/jquery/code.jquery.com_jquery-3.7.0.min.js" />'></script>
+<script src='<c:url value="/include/data-table/jquery.dataTables.min.js" />'></script>
+
 <meta name="theme-color" content="#712cf9">
 </head>
 <body>
@@ -37,7 +41,7 @@
 										<li><a class="dropdown-item" href="/controle_portaria/pessoa">Pessoa</a></li>
 										<li><a class="dropdown-item" href="/controle_portaria/veiculo">Veículo</a></li>
 										<li><hr class="dropdown-divider"></li>
-										<li><a class="dropdown-item" href="#">Imóvel Condomínio</a></li>
+										<li><a class="dropdown-item" href="/controle_portaria/imovelCondominio">Imóvel Condomínio</a></li>
 									</ul></li>								
 							</ul>
 							<ul class="navbar-nav mb-2 mb-lg-0">								

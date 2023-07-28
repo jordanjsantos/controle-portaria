@@ -4,6 +4,7 @@
   <session-factory>
     <mapping class="br.com.controle.portaria.model.TipoPessoa"/>   
     <mapping class="br.com.controle.portaria.model.Veiculo"/> 
-    <mapping class="br.com.controle.portaria.model.Pessoa"/>  
+    <mapping class="br.com.controle.portaria.model.Pessoa"/> 
+    <mapping class="br.com.controle.portaria.model.ImovelCondominio"/>      
   </session-factory>
 </hibernate-configuration>
