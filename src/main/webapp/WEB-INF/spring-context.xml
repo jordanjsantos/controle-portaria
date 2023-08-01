@@ -21,9 +21,9 @@
 	<mvc:resources mapping="/include/**" location="/WEB-INF/include/" />
 	<mvc:resources mapping="/images/**" location="/WEB-INF/images/" />	
 	
-<!-- 	<mvc:interceptors> -->
-<!-- 	    <bean class="br.com.sisfin.controller.AutorizadorInterceptor" /> -->
-<!-- 	</mvc:interceptors> -->
+	<mvc:interceptors>
+	    <bean class="br.com.controle.portaria.controller.AutorizadorInterceptor" />
+	</mvc:interceptors>
 	
 	<bean id="jsonConverter" class="org.springframework.http.converter.json.MappingJacksonHttpMessageConverter"></bean>
 	<bean class="org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter">

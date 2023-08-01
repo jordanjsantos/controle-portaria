@@ -15,6 +15,8 @@ import org.hibernate.Transaction;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 
+import br.com.controle.portaria.model.Usuario;
+
 
 public class GenericDao<T>{
 	
@@ -169,13 +171,12 @@ public class GenericDao<T>{
             	
 	}	
 	
-//	public Boolean naoExisteUsuario(Usuario usuario){
-//		
-//		return 	this.session.createCriteria(Usuario.class)
-//				.add(Restrictions.eq("nmUsuario", usuario.getNmUsuario()))
-//				.add(Restrictions.eq("pwUsuario", usuario.getPwUsuario()))
-//				.uniqueResult() == null;				
-//	}
+	public Boolean naoExisteUsuario(Usuario usuario){
+		return 	this.session.createCriteria(Usuario.class)
+				.add(Restrictions.eq("user", usuario.getUser()))
+				.add(Restrictions.eq("senha", usuario.getSenhaCriptografadaMD5()))
+				.uniqueResult() == null;				
+	}
 	
     
 }

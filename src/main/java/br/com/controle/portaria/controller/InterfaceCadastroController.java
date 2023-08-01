@@ -29,6 +29,5 @@ public interface InterfaceCadastroController <T> {
 	
 	@RequestMapping(value="/excluirModel", method=RequestMethod.POST)
 	public String excluir(@RequestParam("cds") Integer[] cds, Model model) ;
-	
 
 }

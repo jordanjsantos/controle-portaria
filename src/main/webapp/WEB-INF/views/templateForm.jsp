@@ -42,7 +42,12 @@
 										<li><a class="dropdown-item" href="/controle_portaria/veiculo">Veículo</a></li>
 										<li><hr class="dropdown-divider"></li>
 										<li><a class="dropdown-item" href="/controle_portaria/imovelCondominio">Imóvel Condomínio</a></li>
-									</ul></li>								
+										<li><hr class="dropdown-divider"></li>
+										<li><a class="dropdown-item" href="/controle_portaria/usuario">Usuário</a></li>
+										<li><hr class="dropdown-divider"></li>
+										<li><a class="dropdown-item" href="/controle_portaria/logout">Logout/Sair</a></li>
+									</ul>
+								</li>								
 							</ul>
 							<ul class="navbar-nav mb-2 mb-lg-0">								
 								<li class="nav-item dropdown"><a
