@@ -32,6 +32,7 @@ public class HibernateConection {
                     setProperty("hibernate.connection.characterEncoding", "utf8").
                     setProperty("hibernate.connection.useUnicode", "true").
                     setProperty("jdbc.batch_size", "0").
+                    setProperty("hibernate.enable_lazy_load_no_trans", "true").
                     setProperty("hibernate.show_sql", exibiSql.toString()).
                     setProperty("hibernate.format_sql", exibiSql.toString()).
                     setProperty("use_sql_comments", "true");

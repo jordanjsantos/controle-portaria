@@ -40,15 +40,17 @@ public class ImovelCondominioController implements InterfaceCadastroController<I
 	public String listar(Model model) {
 		System.out.println(this.getClass().getName() + "#############listar#########");
 
-		GenericDao<ImovelCondominio> dao = getInstance();		
-		List<ImovelCondominio> listaImovelCondominio = new ArrayList<ImovelCondominio>();
-		listaImovelCondominio = dao.listaTudo("from ImovelCondominio");
-		
-		model.addAttribute("listImovelCondominio", listaImovelCondominio);
-		
+		model.addAttribute("listImovelCondominio", getListaImovelCondominio());
 		model.addAttribute("listPessoa", new PessoaController().getListaPessoa());
 				
 		return "cadastroImovelCondominioForm";
+	}
+	
+	public List<ImovelCondominio> getListaImovelCondominio() {
+		GenericDao<ImovelCondominio> dao = getInstance();		
+		List<ImovelCondominio> listaPessoa = new ArrayList<ImovelCondominio>();
+		listaPessoa = dao.listaTudo("from ImovelCondominio");
+		return listaPessoa;
 	}
 
 	@Override

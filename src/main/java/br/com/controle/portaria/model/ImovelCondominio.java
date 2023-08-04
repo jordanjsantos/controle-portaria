@@ -25,7 +25,7 @@ public class ImovelCondominio implements Serializable {
 	@Column(name = "descricao")
 	private String descricao;
 	
-	@Column(name = "logradouro")//logradouro
+	@Column(name = "logradouro")
 	private String logradouro;
 	
 	@Column(name = "cidade")

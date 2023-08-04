@@ -1,6 +1,5 @@
 package br.com.controle.portaria.controller;
 
-import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -41,15 +40,27 @@ public class UsuarioController implements InterfaceCadastroController<Usuario>{
 	public String listar(Model model) {
 		System.out.println(this.getClass().getName() + "#############listar#########");
 
-		GenericDao<Usuario> dao = getInstance();		
-		List<Usuario> listaUsuario = new ArrayList<Usuario>();
-		listaUsuario = dao.listaTudo("from Usuario");
-		
-		model.addAttribute("listUsuario", listaUsuario);
+		model.addAttribute("listUsuario", getListaUsuario());
 		
 		model.addAttribute("listPessoa", new PessoaController().getListaPessoa());
 				
 		return "cadastroUsuarioForm";
+	}
+	
+	public List<Usuario> getListaUsuario() {
+		GenericDao<Usuario> dao = getInstance();		
+		List<Usuario> listaUsuario = new ArrayList<Usuario>();
+		listaUsuario = dao.listaTudo("from Usuario");
+		return listaUsuario;
+	}
+	
+	public Usuario obterUsuarioPorLogin(String login) {
+		GenericDao<Usuario> dao = getInstance();
+		List<Usuario> lUsuarios = dao.busca("user", login, Usuario.class);
+		if(!lUsuarios.isEmpty()) {
+			return lUsuarios.get(0);
+		}
+		return new Usuario();
 	}
 
 	@Override

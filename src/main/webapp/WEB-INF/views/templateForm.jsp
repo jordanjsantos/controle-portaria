@@ -55,11 +55,9 @@
 									role="button" data-bs-toggle="dropdown" aria-expanded="true">
 										Movimentos </a>
 									<ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-										<li><a class="dropdown-item" href="#">Tipo Pessoa</a></li>
-										<li><a class="dropdown-item" href="#">Veículo</a></li>
-										<li><hr class="dropdown-divider"></li>
-										<li><a class="dropdown-item" href="#">Imóvel Condomínio</a></li>
-									</ul></li>								
+										<li><a class="dropdown-item" href="/controle_portaria/controleRegistro">Controle de Registros</a></li>
+									</ul>
+								</li>								
 							</ul>
 						</div>
 					</div>
