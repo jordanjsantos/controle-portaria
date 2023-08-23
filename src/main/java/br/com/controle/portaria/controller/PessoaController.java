@@ -1,11 +1,16 @@
 package br.com.controle.portaria.controller;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
 
+import org.codehaus.jackson.JsonGenerationException;
+import org.codehaus.jackson.map.JsonMappingException;
+import org.codehaus.jackson.map.ObjectMapper;
+import org.codehaus.jackson.map.ObjectWriter;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -13,6 +18,7 @@ import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import br.com.controle.portaria.database.GenericDao;
 import br.com.controle.portaria.model.Pessoa;
@@ -58,17 +64,38 @@ public class PessoaController implements InterfaceCadastroController<Pessoa>{
 
 	@Override
 	@RequestMapping(value = "/carregarPessoa", method = RequestMethod.GET)
-	public String carregar(@RequestParam("idPessoa")Integer idVeiculo, Model model) {
+	public String carregar(@RequestParam("idPessoa")Integer idPessoa, Model model) {
 		System.out.println(this.getClass().getName() + "#############carregar#########");
 		
 		GenericDao<Pessoa> dao = getInstance();	
 		Pessoa pessoa = new Pessoa();
 		
-		if(idVeiculo != null){
-			pessoa = dao.carrega(idVeiculo, Pessoa.class);
+		if(idPessoa != null){
+			pessoa = dao.carrega(idPessoa, Pessoa.class);
 			model.addAttribute("pessoa", pessoa);
 		}		
 		return listar(model);
+	}
+	
+	@RequestMapping(value = "/buscarPessoaPorNome", method = RequestMethod.POST)
+	@ResponseBody
+	public String carregar(@RequestParam("nome")String nome, Model model) {
+		System.out.println(this.getClass().getName() + "#############carregar#########");
+		
+		GenericDao<Pessoa> dao = getInstance();	
+		List<Pessoa> listPessoa = new ArrayList<Pessoa>();
+		
+		if(nome != null && !"".equals(nome)){
+			listPessoa = dao.busca("nome", nome, Pessoa.class);
+			model.addAttribute("listPessoa", listPessoa);
+			ObjectWriter ow = new ObjectMapper().writer().withDefaultPrettyPrinter();
+			try {
+				return ow.writeValueAsString(listPessoa);			
+			} catch (Exception e) {
+				e.printStackTrace();
+			} 
+		}		
+		return null;
 	}
 
 	@Override

@@ -11,11 +11,14 @@
 	rel="stylesheet">	
 <link href='<c:url value="/include/data-table/jquery.dataTables.min.css" />'
 	rel="stylesheet">	
+<link href='<c:url value="/include/jquery-autocomplete/code.jquery.com_ui_1.13.2_themes_base_jquery-ui.css" />'
+	rel="stylesheet">
 
 <script src='<c:url value="/include/bootstrap-5.3.0-dist/js/bootstrap.min.js" />'></script>
 <script src='<c:url value="/include/bootstrap-5.3.0-dist/js/bootstrap.bundle.min.js" />'></script>
 <script src='<c:url value="/include/jquery/code.jquery.com_jquery-3.7.0.min.js" />'></script>
 <script src='<c:url value="/include/data-table/jquery.dataTables.min.js" />'></script>
+<script src='<c:url value="/include/jquery-autocomplete/code.jquery.com_ui_1.13.2_jquery-ui.js" />'></script>
 
 <meta name="theme-color" content="#712cf9">
 </head>
