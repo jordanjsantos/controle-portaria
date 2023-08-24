@@ -11,11 +11,14 @@
 	rel="stylesheet">	
 <link href='<c:url value="/include/data-table/jquery.dataTables.min.css" />'
 	rel="stylesheet">	
+<link href='<c:url value="/include/jquery-autocomplete/code.jquery.com_ui_1.13.2_themes_base_jquery-ui.css" />'
+	rel="stylesheet">
 
 <script src='<c:url value="/include/bootstrap-5.3.0-dist/js/bootstrap.min.js" />'></script>
 <script src='<c:url value="/include/bootstrap-5.3.0-dist/js/bootstrap.bundle.min.js" />'></script>
 <script src='<c:url value="/include/jquery/code.jquery.com_jquery-3.7.0.min.js" />'></script>
 <script src='<c:url value="/include/data-table/jquery.dataTables.min.js" />'></script>
+<script src='<c:url value="/include/jquery-autocomplete/code.jquery.com_ui_1.13.2_jquery-ui.js" />'></script>
 
 <meta name="theme-color" content="#712cf9">
 </head>
@@ -25,6 +28,17 @@
 			<div class="col-md-12">
 				<img class="mb-4" src="https://getbootstrap.com/docs/4.0/assets/brand/bootstrap-solid.svg" alt="" width="50" height="50">
 			</div>
+		</div>
+		<div class="modal" style="background: none !important;" id="loading" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1">
+		  <div class="modal-dialog modal-dialog-centered" style="background: none !important;">
+		    <div class="modal-content" style="background: none !important; border: none;">
+		      <div class="modal-body" style="background: none !important; text-align: center;">
+		        <div class="spinner-border text-primary" role="status">
+		            <span class="visually-hidden">Loading...</span>
+		        </div>
+		      </div>
+		    </div>
+		  </div>
 		</div>
 		<div class="row top-buffer5 ">
 			<div class="col-md-12">

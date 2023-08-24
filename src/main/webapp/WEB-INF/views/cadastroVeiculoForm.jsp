@@ -17,15 +17,17 @@
 		}
 		
 		$(document).ready(function(){
-		
+			var modal = new bootstrap.Modal(document.getElementById("loading"), {});
 			$("#idNovo").click(function(){
 				$('.inputInsert').val('');			
 			});
 			
 			$("#idSalvar").click(function(){
 				if(validaCamposSalvar()){
+					modal.show();
 					$('#formId').prop('action',"/controle_portaria/salvarVeiculo");
 			    	$('#formId').submit();
+			    	modal.hide();
 				}		    	
 		    }); 
 			
@@ -36,6 +38,35 @@
 			
 			new DataTable('#idTableVeiculo', {
 			    pagingType: 'full_numbers'
+			});
+			
+			var MIN_LENGTH = 2;
+			$('#idPessoaNome').keyup(function() {
+				var nome = $('#idPessoaNome').val();
+			    if (nome.length >= MIN_LENGTH) {    
+			    	$.ajax({
+				        type:'POST',
+				        url:'./buscarPessoaPorNome',
+				        dataType: "json",
+				        data: {"nome": nome},
+				        success: function(msg){
+					        var availableTags = msg.map(function(value, key){
+					            return {
+					            		id: value.id,
+					            		label: value.nome,
+			                    		value: value.nome
+			                    	   };
+					        });
+					        $("#idPessoaNome").autocomplete({
+					            source: availableTags, // source é a origem dos dados ok
+					            select: function(event, ui) {   // PARAMETRO SELECT                                
+						            $("#idPessoaId").val(ui.item.id );   // PREENCHE RETORNO DA CONSULTA
+						            $("#idPessoaNome").val(ui.item.value);   // PREENCHE RETORNO DA CONSULTA            
+					        	} 
+				           	});
+			        	}
+			        });
+			    }
 			});
 		    
 		});		
@@ -101,18 +132,10 @@
 					<div class="row top-buffer15">
 						<div class="col-3"></div>
 						<div class="col-5">
-							<div class="input-group">
-								<span class="input-group-addon input-fixed-width75">Pessoa</span>
-								<select class="form-select inputInsert cpObrigatorio" aria-label="Default select example" name="pessoa.id">
-								  	<option selected>Selecione uma Pessoa</option>
-								  	<c:forEach items="${listPessoa}" var="pessoa">
-										<option value="${pessoa.id}" 
-											<c:if test="${veiculo.pessoa.id eq pessoa.id}">
-								   				selected="selected"
-								   			</c:if>
-								   		>${pessoa.nome}</option>								   		
-							  		</c:forEach>
-								</select>
+							<div class="input-group ui-widget">
+								<span class="input-group-addon input-fixed-width75 ">Pessoa</span>
+								<input type="text" name="pessoa.nome" id="idPessoaNome" class="form-control inputInsert cpObrigatorio" maxlength="150" value="${veiculo.pessoa.nome}" >
+								<input type="hidden" name="pessoa.id" id="idPessoaId" class="inputInsert" value="${veiculo.pessoa.id}">
 							</div>
 						</div>
 					</div>
@@ -162,7 +185,6 @@
 								</tbody>
 							</table>
 						</div>
-
 					</div>
 				</form>
 			</div>
