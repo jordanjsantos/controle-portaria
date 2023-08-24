@@ -29,6 +29,17 @@
 				<img class="mb-4" src="https://getbootstrap.com/docs/4.0/assets/brand/bootstrap-solid.svg" alt="" width="50" height="50">
 			</div>
 		</div>
+		<div class="modal" style="background: none !important;" id="loading" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1">
+		  <div class="modal-dialog modal-dialog-centered" style="background: none !important;">
+		    <div class="modal-content" style="background: none !important; border: none;">
+		      <div class="modal-body" style="background: none !important; text-align: center;">
+		        <div class="spinner-border text-primary" role="status">
+		            <span class="visually-hidden">Loading...</span>
+		        </div>
+		      </div>
+		    </div>
+		  </div>
+		</div>
 		<div class="row top-buffer5 ">
 			<div class="col-md-12">
 				<nav class="navbar navbar-expand-lg navbar-dark bg-dark">

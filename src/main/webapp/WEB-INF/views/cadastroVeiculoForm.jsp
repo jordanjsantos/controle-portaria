@@ -17,15 +17,17 @@
 		}
 		
 		$(document).ready(function(){
-		
+			var modal = new bootstrap.Modal(document.getElementById("loading"), {});
 			$("#idNovo").click(function(){
 				$('.inputInsert').val('');			
 			});
 			
 			$("#idSalvar").click(function(){
 				if(validaCamposSalvar()){
+					modal.show();
 					$('#formId').prop('action',"/controle_portaria/salvarVeiculo");
 			    	$('#formId').submit();
+			    	modal.hide();
 				}		    	
 		    }); 
 			
@@ -39,36 +41,30 @@
 			});
 			
 			var MIN_LENGTH = 2;
-
-			$('#idPessoa').keyup(function() {
-
-				var nome = $('#idPessoa').val();
-	
+			$('#idPessoaNome').keyup(function() {
+				var nome = $('#idPessoaNome').val();
 			    if (nome.length >= MIN_LENGTH) {    
-	
-			        $.ajax({
+			    	$.ajax({
 				        type:'POST',
 				        url:'./buscarPessoaPorNome',
 				        dataType: "json",
 				        data: {"nome": nome},
 				        success: function(msg){
-// 				        	const pessoa = JSON.stringify(msg);
-// 					        var availableTags = pessoa.nome;
-					        
-					        var availableTags = msg.map(function(val){
-					            return val.nome;
-					        })
-		
-					        $("#idPessoa").autocomplete({
-					            source: availableTags // source é a origem dos dados ok
-	// 				            select: function( event, ui ) {   // PARAMETRO SELECT                                
-	// 				            $( "#cid_nome" ).val( ui.item.obj.cid_nome );   // PREENCHE RETORNO DA CONSULTA
-	// 				            $( "#cid_cod_nome" ).val(ui.item.obj.cid_id);   // PREENCHE RETORNO DA CONSULTA            
-	// 				        	} 
-		
+					        var availableTags = msg.map(function(value, key){
+					            return {
+					            		id: value.id,
+					            		label: value.nome,
+			                    		value: value.nome
+			                    	   };
+					        });
+					        $("#idPessoaNome").autocomplete({
+					            source: availableTags, // source é a origem dos dados ok
+					            select: function(event, ui) {   // PARAMETRO SELECT                                
+						            $("#idPessoaId").val(ui.item.id );   // PREENCHE RETORNO DA CONSULTA
+						            $("#idPessoaNome").val(ui.item.value);   // PREENCHE RETORNO DA CONSULTA            
+					        	} 
 				           	});
 			        	}
-	
 			        });
 			    }
 			});
@@ -138,7 +134,8 @@
 						<div class="col-5">
 							<div class="input-group ui-widget">
 								<span class="input-group-addon input-fixed-width75 ">Pessoa</span>
-								<input type="text" name="pessoa" id="idPessoa" class="form-control inputInsert cpObrigatorio" maxlength="150"  >
+								<input type="text" name="pessoa.nome" id="idPessoaNome" class="form-control inputInsert cpObrigatorio" maxlength="150" value="${veiculo.pessoa.nome}" >
+								<input type="hidden" name="pessoa.id" id="idPessoaId" class="inputInsert" value="${veiculo.pessoa.id}">
 							</div>
 						</div>
 					</div>
@@ -188,7 +185,6 @@
 								</tbody>
 							</table>
 						</div>
-
 					</div>
 				</form>
 			</div>
