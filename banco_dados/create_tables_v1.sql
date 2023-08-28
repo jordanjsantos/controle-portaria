@@ -27,9 +27,8 @@ CREATE TABLE IF NOT EXISTS `controle_portaria`.`tipo_pessoa` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `decricao` VARCHAR(45) NULL,
   PRIMARY KEY (`id`),
-  UNIQUE INDEX `id_UNIQUE` (`id` ASC) VISIBLE)
+  UNIQUE INDEX `id_UNIQUE` (`id` ASC) )
 ENGINE = InnoDB;
-
 
 -- -----------------------------------------------------
 -- Table `controle_portaria`.`pessoa`
@@ -43,8 +42,8 @@ CREATE TABLE IF NOT EXISTS `controle_portaria`.`pessoa` (
   `cpf` VARCHAR(11) NULL,
   `tipo_pessoa_id` INT NOT NULL,
   PRIMARY KEY (`id`),
-  UNIQUE INDEX `id_UNIQUE` (`id` ASC) VISIBLE,
-  INDEX `fk_pessoa_tipo_pessoa_idx` (`tipo_pessoa_id` ASC) VISIBLE,
+  UNIQUE INDEX `id_UNIQUE` (`id` ASC) ,
+  INDEX `fk_pessoa_tipo_pessoa_idx` (`tipo_pessoa_id` ASC) ,
   CONSTRAINT `fk_pessoa_tipo_pessoa`
     FOREIGN KEY (`tipo_pessoa_id`)
     REFERENCES `controle_portaria`.`tipo_pessoa` (`id`)
@@ -64,15 +63,14 @@ CREATE TABLE IF NOT EXISTS `controle_portaria`.`usuario` (
   `password` VARCHAR(100) NOT NULL,
   `pessoa_id` INT NOT NULL,
   PRIMARY KEY (`id`),
-  UNIQUE INDEX `id_UNIQUE` (`id` ASC) VISIBLE,
-  INDEX `fk_usuario_pessoa1_idx` (`pessoa_id` ASC) VISIBLE,
+  UNIQUE INDEX `id_UNIQUE` (`id` ASC) ,
+  INDEX `fk_usuario_pessoa1_idx` (`pessoa_id` ASC) ,
   CONSTRAINT `fk_usuario_pessoa1`
     FOREIGN KEY (`pessoa_id`)
     REFERENCES `controle_portaria`.`pessoa` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
-
 
 -- -----------------------------------------------------
 -- Table `controle_portaria`.`imovel_condominio`
@@ -87,8 +85,8 @@ CREATE TABLE IF NOT EXISTS `controle_portaria`.`imovel_condominio` (
   `uf` VARCHAR(2) NULL,
   `pessoa_id` INT NOT NULL,
   PRIMARY KEY (`id`),
-  UNIQUE INDEX `id_UNIQUE` (`id` ASC) VISIBLE,
-  INDEX `fk_imovel_condominio_pessoa1_idx` (`pessoa_id` ASC) VISIBLE,
+  UNIQUE INDEX `id_UNIQUE` (`id` ASC) ,
+  INDEX `fk_imovel_condominio_pessoa1_idx` (`pessoa_id` ASC) ,
   CONSTRAINT `fk_imovel_condominio_pessoa1`
     FOREIGN KEY (`pessoa_id`)
     REFERENCES `controle_portaria`.`pessoa` (`id`)
@@ -109,10 +107,10 @@ CREATE TABLE IF NOT EXISTS `controle_portaria`.`controle_registro` (
   `usuario_id` INT NOT NULL,
   `imovel_condominio_id` INT NOT NULL,
   PRIMARY KEY (`id`),
-  UNIQUE INDEX `id_UNIQUE` (`id` ASC) VISIBLE,
-  INDEX `fk_controle_pessoa1_idx` (`pessoa_id` ASC) VISIBLE,
-  INDEX `fk_controle_registro_usuario1_idx` (`usuario_id` ASC) VISIBLE,
-  INDEX `fk_controle_registro_imovel_condominio1_idx` (`imovel_condominio_id` ASC) VISIBLE,
+  UNIQUE INDEX `id_UNIQUE` (`id` ASC) ,
+  INDEX `fk_controle_pessoa1_idx` (`pessoa_id` ASC) ,
+  INDEX `fk_controle_registro_usuario1_idx` (`usuario_id` ASC) ,
+  INDEX `fk_controle_registro_imovel_condominio1_idx` (`imovel_condominio_id` ASC) ,
   CONSTRAINT `fk_controle_pessoa1`
     FOREIGN KEY (`pessoa_id`)
     REFERENCES `controle_portaria`.`pessoa` (`id`)
@@ -144,8 +142,8 @@ CREATE TABLE IF NOT EXISTS `controle_portaria`.`veiculo` (
   `placa` VARCHAR(8) NULL,
   `pessoa_id` INT NOT NULL,
   PRIMARY KEY (`id`),
-  UNIQUE INDEX `id_UNIQUE` (`id` ASC) VISIBLE,
-  INDEX `fk_veiculo_pessoa1_idx` (`pessoa_id` ASC) VISIBLE,
+  UNIQUE INDEX `id_UNIQUE` (`id` ASC) ,
+  INDEX `fk_veiculo_pessoa1_idx` (`pessoa_id` ASC) ,
   CONSTRAINT `fk_veiculo_pessoa1`
     FOREIGN KEY (`pessoa_id`)
     REFERENCES `controle_portaria`.`pessoa` (`id`)
@@ -157,3 +155,16 @@ ENGINE = InnoDB;
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
+
+-- -----------------------------------------------------
+-- Inserts
+-- -----------------------------------------------------
+insert into `controle_portaria`.`tipo_pessoa` (`decricao`)
+values ('Usuario Sistema');
+
+insert into `controle_portaria`.`pessoa` (`nome`, `tipo_pessoa_id`)
+values ('Usuário Teste', 1);
+
+--password inicial eh 123456
+insert into `controle_portaria`.`usuario` (`login`, `password`, `pessoa_id`)
+values ('userTeste', 'E10ADC3949BA59ABBE56E057F20F883E', 1);
