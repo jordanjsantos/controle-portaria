@@ -1,4 +1,4 @@
-package br.com.controle.portaria.controller;
+package br.com.controle.portaria.controller.web;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -12,9 +12,9 @@ import br.com.controle.portaria.database.GenericDao;
 import br.com.controle.portaria.model.Usuario;
 
 @Controller
-public class LoginController {
+public class LoginControllerImpl {
 	
-	private static Logger LOGGER = Logger.getLogger(LoginController.class);
+	private static Logger LOGGER = Logger.getLogger(LoginControllerImpl.class);
 		
 	@RequestMapping("acessoSistema")
 	public String loginForm() {

@@ -1,4 +1,4 @@
-package br.com.controle.portaria.controller;
+package br.com.controle.portaria.controller.web;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -15,11 +15,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import br.com.controle.portaria.database.GenericDao;
-import br.com.controle.portaria.model.Pessoa;
 import br.com.controle.portaria.model.TipoPessoa;
 
 @Controller
-public class TipoPessoaController implements InterfaceCadastroController<TipoPessoa>{
+public class TipoPessoaControllerImpl implements WebControllerInterface<TipoPessoa>{
 	
 	private static GenericDao<TipoPessoa> dao;
 

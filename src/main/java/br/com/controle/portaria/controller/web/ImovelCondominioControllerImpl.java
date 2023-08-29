@@ -1,4 +1,4 @@
-package br.com.controle.portaria.controller;
+package br.com.controle.portaria.controller.web;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -18,7 +18,7 @@ import br.com.controle.portaria.database.GenericDao;
 import br.com.controle.portaria.model.ImovelCondominio;
 
 @Controller
-public class ImovelCondominioController implements InterfaceCadastroController<ImovelCondominio>{
+public class ImovelCondominioControllerImpl implements WebControllerInterface<ImovelCondominio>{
 	
 	private static GenericDao<ImovelCondominio> dao;
 
@@ -41,7 +41,7 @@ public class ImovelCondominioController implements InterfaceCadastroController<I
 		System.out.println(this.getClass().getName() + "#############listar#########");
 
 		model.addAttribute("listImovelCondominio", getListaImovelCondominio());
-		model.addAttribute("listPessoa", new PessoaController().getListaPessoa());
+		model.addAttribute("listPessoa", new PessoaControllerImpl().getListaPessoa());
 				
 		return "cadastroImovelCondominioForm";
 	}

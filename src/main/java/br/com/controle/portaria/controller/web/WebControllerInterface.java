@@ -1,4 +1,4 @@
-package br.com.controle.portaria.controller;
+package br.com.controle.portaria.controller.web;
 
 import javax.servlet.http.HttpSession;
 
@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
-public interface InterfaceCadastroController <T> {
+public interface WebControllerInterface <T> {
 	
 	@InitBinder
 	public void dataBinding(WebDataBinder binder);

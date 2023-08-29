@@ -1,4 +1,4 @@
-package br.com.controle.portaria.controller;
+package br.com.controle.portaria.controller.web;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -18,7 +18,7 @@ import br.com.controle.portaria.database.GenericDao;
 import br.com.controle.portaria.model.Usuario;
 
 @Controller
-public class UsuarioController implements InterfaceCadastroController<Usuario>{
+public class UsuarioControllerImpl implements WebControllerInterface<Usuario>{
 	
 	private static GenericDao<Usuario> dao;
 
@@ -42,7 +42,7 @@ public class UsuarioController implements InterfaceCadastroController<Usuario>{
 
 		model.addAttribute("listUsuario", getListaUsuario());
 		
-		model.addAttribute("listPessoa", new PessoaController().getListaPessoa());
+		model.addAttribute("listPessoa", new PessoaControllerImpl().getListaPessoa());
 				
 		return "cadastroUsuarioForm";
 	}

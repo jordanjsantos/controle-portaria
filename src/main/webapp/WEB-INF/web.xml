@@ -15,9 +15,9 @@
   </context-param>
  
   <!-- remover esse treho em producao -->
-  <listener>
-    <listener-class>org.springframework.web.util.Log4jConfigListener</listener-class>
-  </listener>
+<!--   <listener> -->
+<!--     <listener-class>org.springframework.web.util.Log4jConfigListener</listener-class> -->
+<!--   </listener> -->
  <!-- remover esse trecho em producao -->
   <servlet>
     <servlet-name>springmvc</servlet-name>

@@ -1,4 +1,4 @@
-package br.com.controle.portaria.controller;
+package br.com.controle.portaria.controller.web;
 
 import java.time.LocalDateTime;
 import java.time.ZoneId;
@@ -22,7 +22,7 @@ import br.com.controle.portaria.model.ControleRegistro;
 import br.com.controle.portaria.model.Usuario;
 
 @Controller
-public class RegistroController implements InterfaceCadastroController<ControleRegistro>{
+public class RegistroControllerImpl implements WebControllerInterface<ControleRegistro>{
 	
 	private static GenericDao<ControleRegistro> dao;
 
@@ -50,9 +50,9 @@ public class RegistroController implements InterfaceCadastroController<ControleR
 		
 		model.addAttribute("listControleRegistro", listaControleRegistro);
 		
-		model.addAttribute("listUsuario", new UsuarioController().getListaUsuario());
-		model.addAttribute("listPessoa", new PessoaController().getListaPessoa());
-		model.addAttribute("listImovelCond", new ImovelCondominioController().getListaImovelCondominio());
+		model.addAttribute("listUsuario", new UsuarioControllerImpl().getListaUsuario());
+		model.addAttribute("listPessoa", new PessoaControllerImpl().getListaPessoa());
+		model.addAttribute("listImovelCond", new ImovelCondominioControllerImpl().getListaImovelCondominio());
 				
 		return "cadastroControleRegistroForm";
 	}
@@ -83,7 +83,7 @@ public class RegistroController implements InterfaceCadastroController<ControleR
 		GenericDao<ControleRegistro> dao = getInstance();	
 		
 		Usuario userTemp = (Usuario) session.getAttribute("usuarioLogado");
-		Usuario usuarioFinal = new UsuarioController().obterUsuarioPorLogin(userTemp.getUser());
+		Usuario usuarioFinal = new UsuarioControllerImpl().obterUsuarioPorLogin(userTemp.getUser());
 		
 		controleRegistro.setDataHoraReg(
 				Date.from(LocalDateTime.now()
