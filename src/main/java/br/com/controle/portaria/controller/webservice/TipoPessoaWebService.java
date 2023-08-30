@@ -1,25 +1,30 @@
 package br.com.controle.portaria.controller.webservice;
 
-import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import br.com.controle.portaria.database.GenericDao;
 import br.com.controle.portaria.model.TipoPessoa;
+import br.com.controle.portaria.services.ServiceInterface;
+import br.com.controle.portaria.services.TipoPessoaServiceImpl;
 
 @RestController
 public class TipoPessoaWebService implements WebServiceInterface<TipoPessoa>{
 
-	private static GenericDao<TipoPessoa> dao;
+	private static ServiceInterface<TipoPessoa> tipoPessoaService;
 
-    private static synchronized GenericDao<TipoPessoa> getInstance() {
-        if (dao == null || dao.isSessionClosed()) {
-        	dao = new GenericDao<TipoPessoa>();
+    private static synchronized ServiceInterface<TipoPessoa> getInstance() {
+        if (tipoPessoaService == null) {
+        	tipoPessoaService = new TipoPessoaServiceImpl();
         }
-        return dao;
+        return tipoPessoaService;
     }
 	
 	@Override
@@ -29,36 +34,33 @@ public class TipoPessoaWebService implements WebServiceInterface<TipoPessoa>{
 	}
 
 	@Override
-	@GetMapping("/getTipoPessoaRest")
+	@GetMapping("/listarTipoPessoaRest")
 	public List<TipoPessoa> listar() {
-		System.out.println(this.getClass().getName() + "#############listar#########");
-		List<TipoPessoa> listaTipoPessoa = getListaTipoPessoa();
+		tipoPessoaService = getInstance();
+		List<TipoPessoa> listaTipoPessoa = tipoPessoaService.listar();
 		return listaTipoPessoa;
 	}
 	
-	public List<TipoPessoa> getListaTipoPessoa() {
-		GenericDao<TipoPessoa> dao = getInstance();		
-		List<TipoPessoa> listaTipoPessoa = new ArrayList<TipoPessoa>();
-		listaTipoPessoa = dao.listaTudo("from TipoPessoa");		
-		return listaTipoPessoa;
+	@Override
+	@GetMapping("/carregarTipoPessoaRest/{id}")
+	public TipoPessoa carregar(@PathVariable Integer id) {
+		tipoPessoaService = getInstance();
+		TipoPessoa tipoPessoa = tipoPessoaService.carregar(id);
+		return tipoPessoa;
 	}
 
 	@Override
-	public TipoPessoa carregar(Integer id) {
-		// TODO Auto-generated method stub
-		return null;
+	@PutMapping("/salvarTipoPessoaRest")
+	public void salvar(@RequestBody TipoPessoa tipoPessoa) {
+		tipoPessoaService = getInstance();
+		tipoPessoaService.salvar(tipoPessoa);
 	}
 
 	@Override
-	public String salvar(TipoPessoa newEmployee, Long id) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public String excluir(Integer id) {
-		// TODO Auto-generated method stub
-		return null;
+	@DeleteMapping("/excluirTipoPessoaRest/{id}")
+	public void excluir(@PathVariable Integer id) {
+		tipoPessoaService = getInstance();
+		tipoPessoaService.excluir((Integer[]) Arrays.asList(id).toArray());
 	}
 
 }

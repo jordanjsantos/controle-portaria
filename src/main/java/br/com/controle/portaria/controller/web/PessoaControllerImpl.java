@@ -50,7 +50,7 @@ public class PessoaControllerImpl implements WebControllerInterface<Pessoa>{
 		
 		model.addAttribute("listPessoa", listaPessoa);
 		
-		model.addAttribute("listTipoPessoa", new TipoPessoaControllerImpl().getListaTipoPessoa());
+		//model.addAttribute("listTipoPessoa", new TipoPessoaControllerImpl().getListaTipoPessoa());
 		
 		return "cadastroPessoaForm";
 	}

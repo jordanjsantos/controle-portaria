@@ -17,16 +17,12 @@ public interface WebServiceInterface <T> {
 	@InitBinder
 	public void dataBinding(WebDataBinder binder);
 	
-	@GetMapping("/cadastroModelLista")
 	public List<T>  listar();
 	
-	@GetMapping("/carregarModel/{id}")
 	public T carregar(@PathVariable Integer id);
 	
-	@PutMapping("/salvarModel/{id}")
-	public String salvar(@RequestBody T newEmployee, @PathVariable Long id);		
+	public void salvar(@RequestBody T newEmployee);		
 	
-	@DeleteMapping("/excluirModel/{id}")
-	public String excluir(@PathVariable Integer id);
+	public void excluir(@PathVariable Integer id);
 
 }
