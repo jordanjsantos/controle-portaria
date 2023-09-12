@@ -8,13 +8,22 @@ import org.springframework.stereotype.Controller;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import br.com.controle.portaria.database.GenericDao;
 import br.com.controle.portaria.model.Usuario;
+import br.com.controle.portaria.services.LoginServiceImpl;
 
 @Controller
 public class LoginControllerImpl {
 	
 	private static Logger LOGGER = Logger.getLogger(LoginControllerImpl.class);
+	
+	private static LoginServiceImpl loginService;
+
+    private static synchronized LoginServiceImpl getInstance() {
+        if (loginService == null) {
+        	loginService = new LoginServiceImpl();
+        }
+        return loginService;
+    }
 		
 	@RequestMapping("acessoSistema")
 	public String loginForm() {
@@ -24,10 +33,8 @@ public class LoginControllerImpl {
 	@RequestMapping("efetuaLogin")
 	public String efetuaLogin(@Validated Usuario usuario, HttpSession session, HttpServletRequest request) {		
 		try {
-			GenericDao<Usuario> dao = new GenericDao<Usuario>();		
-			dao = carregaDao();	
-			
-			if(dao.naoExisteUsuario(usuario)) {		
+			loginService = getInstance();		
+			if(loginService.naoExisteUsuario(usuario)) {		
 				session.setAttribute("msgErrorPasword", "Usuário ou Senha inválida");
 				return "redirect:acessoSistema";		    
 			} else {
@@ -47,9 +54,5 @@ public class LoginControllerImpl {
 		System.out.println("#############log logout#############");
 		session.invalidate();
 		return "redirect:acessoSistema";
-	}
-	
-	private GenericDao<Usuario> carregaDao(){
-		return new GenericDao<Usuario>();
 	}
 }

@@ -18,15 +18,17 @@ public class AutorizadorInterceptor extends HandlerInterceptorAdapter{
 		if(uri.endsWith("acessoSistema") || uri.endsWith("efetuaLogin") 
 				||  uri.contains("images") || uri.contains("include") 
 				|| uri.contains("swagger-resources") || uri.contains("swagger-ui")
-				|| uri.contains("api-docs")){
+				|| uri.contains("api-docs") || uri.contains("efetuaLoginRest")){
 			return true;
 		}
 		if(request.getSession().getAttribute("usuarioLogado") != null) {
 			return true;
 		}
-
-        response.sendRedirect("acessoSistema");
-	      
+		if(!uri.contains("Rest")) {
+			response.sendRedirect("acessoSistema");
+		}else {
+			response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+		}
 	    return false;
 	}
 
