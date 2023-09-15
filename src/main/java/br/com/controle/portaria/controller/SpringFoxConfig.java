@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurationSupport;
 
 import springfox.documentation.builders.PathSelectors;
@@ -17,7 +17,7 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 //@EnableOpenApi
 @Configuration
-@EnableSwagger2
+@EnableSwagger2 
 public class SpringFoxConfig extends WebMvcConfigurationSupport {
 
 	@Bean
@@ -27,7 +27,9 @@ public class SpringFoxConfig extends WebMvcConfigurationSupport {
 				.apis(RequestHandlerSelectors.basePackage("br.com.controle.portaria.controller.webservice"))
 				.paths(PathSelectors.any())
 				.build()
-				.apiInfo(metaInfo());
+				.apiInfo(metaInfo())
+				.genericModelSubstitutes(ResponseEntity.class)
+		        .forCodeGeneration(true);
 	}
 
 	private ApiInfo metaInfo() {
@@ -38,10 +40,10 @@ public class SpringFoxConfig extends WebMvcConfigurationSupport {
 		return apiInfo;
 	}
 	
-	@Override
-	public void addResourceHandlers(ResourceHandlerRegistry registry) {
-//		registry.addResourceHandler("swagger-ui.html").addResourceLocations("classpath:/META-INF/resources/");
-//		registry.addResourceHandler("/webjars/**").addResourceLocations("classpath:/META-INF/resources/webjars/");
-	}
-	
+//	@Override
+//	public void addResourceHandlers(ResourceHandlerRegistry registry) {
+//		registry.addResourceHandler("swagger-ui.html").addResourceLocations("classpath:/META-INF/resources/webjars/");
+//		registry.addResourceHandler("/webjars/**").addResourceLocations("classpath:/META-INF/resources/webjars/springfox-swagger-ui/");
+//	}
+//	
 }
