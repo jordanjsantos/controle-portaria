@@ -18,15 +18,15 @@ import br.com.controle.portaria.services.ServiceInterfaceAbstract;
 import br.com.controle.portaria.services.impl.PessoaServiceImpl;
 
 @RestController
-public class PessoaWebService implements WebServiceInterface<Pessoa>{
+public class PessoaWebServiceImpl implements WebServiceInterface<Pessoa>{
 
-	private static ServiceInterfaceAbstract<Pessoa> pessoaService;
+	private static ServiceInterfaceAbstract<Pessoa> service;
 
     private static synchronized ServiceInterfaceAbstract<Pessoa> getInstance() {
-        if (pessoaService == null) {
-        	pessoaService = new PessoaServiceImpl();
+        if (service == null) {
+        	service = new PessoaServiceImpl();
         }
-        return pessoaService;
+        return service;
     }
 	
 	@Override
@@ -38,16 +38,16 @@ public class PessoaWebService implements WebServiceInterface<Pessoa>{
 	@Override
 	@GetMapping("/listarPessoaRest")
 	public List<Pessoa> listar() {
-		pessoaService = getInstance();
-		List<Pessoa> listaTipoPessoa = pessoaService.listar();
+		service = getInstance();
+		List<Pessoa> listaTipoPessoa = service.listar();
 		return listaTipoPessoa;
 	}
 	
 	@Override
 	@GetMapping("/carregarPessoaRest/{id}")
 	public Pessoa carregar(@PathVariable Integer id) {
-		pessoaService = getInstance();
-		Pessoa tipoPessoa = pessoaService.carregar(id);
+		service = getInstance();
+		Pessoa tipoPessoa = service.carregar(id);
 		return tipoPessoa;
 	}
 	
@@ -63,15 +63,15 @@ public class PessoaWebService implements WebServiceInterface<Pessoa>{
 	@Override
 	@PutMapping("/salvarPessoaRest")
 	public void salvar(@RequestBody Pessoa tipoPessoa) {
-		pessoaService = getInstance();
-		pessoaService.salvar(tipoPessoa);
+		service = getInstance();
+		service.salvar(tipoPessoa);
 	}
 
 	@Override
 	@DeleteMapping("/excluirPessoaRest/{id}")
 	public void excluir(@PathVariable Integer id) {
-		pessoaService = getInstance();
-		pessoaService.excluir((Integer[]) Arrays.asList(id).toArray());
+		service = getInstance();
+		service.excluir((Integer[]) Arrays.asList(id).toArray());
 	}
 
 }

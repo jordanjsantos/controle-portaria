@@ -51,7 +51,7 @@ public class RegistroControllerImpl implements WebControllerInterface<ControleRe
 		
 		model.addAttribute("listControleRegistro", listaControleRegistro);
 		
-		model.addAttribute("listUsuario", new UsuarioControllerImpl().getListaUsuario());
+		//model.addAttribute("listUsuario", new UsuarioControllerImpl().getListaUsuario());
 		model.addAttribute("listPessoa", new PessoaControllerImpl().getListaPessoa());
 		model.addAttribute("listImovelCond", new ImovelCondominioControllerImpl().getListaImovelCondominio());
 				

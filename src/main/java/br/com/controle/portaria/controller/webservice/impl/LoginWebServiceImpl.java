@@ -15,15 +15,15 @@ import br.com.controle.portaria.model.Usuario;
 import br.com.controle.portaria.services.impl.LoginServiceImpl;
 
 @RestController
-public class LoginWebService {
+public class LoginWebServiceImpl {
 
-	private static LoginServiceImpl usuarioService;
+	private static LoginServiceImpl service;
 
 	private static synchronized LoginServiceImpl getInstance() {
-		if (usuarioService == null) {
-			usuarioService = new LoginServiceImpl();
+		if (service == null) {
+			service = new LoginServiceImpl();
 		}
-		return usuarioService;
+		return service;
 	}
 
 	// @ApiOperation("Efetuar Login")
