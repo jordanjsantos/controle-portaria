@@ -1,4 +1,4 @@
-package br.com.controle.portaria.services;
+package br.com.controle.portaria.services.impl;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -6,6 +6,7 @@ import java.util.List;
 
 import br.com.controle.portaria.database.GenericDao;
 import br.com.controle.portaria.model.TipoPessoa;
+import br.com.controle.portaria.services.ServiceInterfaceAbstract;
 
 
 @SuppressWarnings("unchecked")

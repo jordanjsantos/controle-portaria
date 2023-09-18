@@ -1,9 +1,10 @@
-package br.com.controle.portaria.services;
+package br.com.controle.portaria.services.impl;
 
 import java.util.List;
 
 import br.com.controle.portaria.database.GenericDao;
 import br.com.controle.portaria.model.Usuario;
+import br.com.controle.portaria.services.ServiceInterfaceAbstract;
 
 @SuppressWarnings("unchecked")
 public class LoginServiceImpl extends ServiceInterfaceAbstract<Usuario> {

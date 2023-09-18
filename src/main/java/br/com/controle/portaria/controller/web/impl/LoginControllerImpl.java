@@ -1,4 +1,4 @@
-package br.com.controle.portaria.controller.web;
+package br.com.controle.portaria.controller.web.impl;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -9,7 +9,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import br.com.controle.portaria.model.Usuario;
-import br.com.controle.portaria.services.LoginServiceImpl;
+import br.com.controle.portaria.services.impl.LoginServiceImpl;
 
 @Controller
 public class LoginControllerImpl {

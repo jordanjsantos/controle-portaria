@@ -1,4 +1,4 @@
-package br.com.controle.portaria.controller.webservice;
+package br.com.controle.portaria.controller.webservice.impl;
 
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.com.controle.portaria.model.Usuario;
-import br.com.controle.portaria.services.LoginServiceImpl;
+import br.com.controle.portaria.services.impl.LoginServiceImpl;
 
 @RestController
 public class LoginWebService {

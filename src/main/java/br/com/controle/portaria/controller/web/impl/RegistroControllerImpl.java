@@ -1,4 +1,4 @@
-package br.com.controle.portaria.controller.web;
+package br.com.controle.portaria.controller.web.impl;
 
 import java.time.LocalDateTime;
 import java.time.ZoneId;
@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import br.com.controle.portaria.controller.web.WebControllerInterface;
 import br.com.controle.portaria.database.GenericDao;
 import br.com.controle.portaria.model.ControleRegistro;
 import br.com.controle.portaria.model.Usuario;

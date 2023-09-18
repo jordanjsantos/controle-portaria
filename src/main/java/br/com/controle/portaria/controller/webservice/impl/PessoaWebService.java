@@ -1,4 +1,4 @@
-package br.com.controle.portaria.controller.webservice;
+package br.com.controle.portaria.controller.webservice.impl;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -12,9 +12,10 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import br.com.controle.portaria.controller.webservice.WebServiceInterface;
 import br.com.controle.portaria.model.Pessoa;
-import br.com.controle.portaria.services.PessoaServiceImpl;
 import br.com.controle.portaria.services.ServiceInterfaceAbstract;
+import br.com.controle.portaria.services.impl.PessoaServiceImpl;
 
 @RestController
 public class PessoaWebService implements WebServiceInterface<Pessoa>{

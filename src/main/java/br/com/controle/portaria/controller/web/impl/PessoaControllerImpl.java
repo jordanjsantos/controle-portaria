@@ -1,4 +1,4 @@
-package br.com.controle.portaria.controller.web;
+package br.com.controle.portaria.controller.web.impl;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,9 +16,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import br.com.controle.portaria.controller.web.WebControllerInterface;
 import br.com.controle.portaria.model.Pessoa;
-import br.com.controle.portaria.services.PessoaServiceImpl;
 import br.com.controle.portaria.services.ServiceInterfaceAbstract;
+import br.com.controle.portaria.services.impl.PessoaServiceImpl;
 
 @Controller
 public class PessoaControllerImpl implements WebControllerInterface<Pessoa>{

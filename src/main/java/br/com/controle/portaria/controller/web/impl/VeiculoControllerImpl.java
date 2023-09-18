@@ -1,4 +1,4 @@
-package br.com.controle.portaria.controller.web;
+package br.com.controle.portaria.controller.web.impl;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import br.com.controle.portaria.controller.web.WebControllerInterface;
 import br.com.controle.portaria.database.GenericDao;
 import br.com.controle.portaria.model.Veiculo;
 
