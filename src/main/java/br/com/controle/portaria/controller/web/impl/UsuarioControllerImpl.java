@@ -30,8 +30,6 @@ public class UsuarioControllerImpl implements WebControllerInterface<Usuario>{
     private static synchronized ServiceInterface<Pessoa> getInstancePessoa() {
         return servicePessoa == null ? new PessoaServiceImpl() : servicePessoa;
     }
-    
-    
 
 	@Override
 	public void dataBinding(WebDataBinder binder) {

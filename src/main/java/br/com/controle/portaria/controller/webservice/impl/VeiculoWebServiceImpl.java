@@ -12,56 +12,56 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.com.controle.portaria.controller.webservice.WebServiceInterface;
-import br.com.controle.portaria.model.Usuario;
+import br.com.controle.portaria.model.Veiculo;
 import br.com.controle.portaria.services.ServiceInterface;
-import br.com.controle.portaria.services.impl.UsuarioServiceImpl;
+import br.com.controle.portaria.services.impl.VeiculoServiceImpl;
 
 @RestController
-public class UsuarioWebServiceImpl implements WebServiceInterface<Usuario> {
+public class VeiculoWebServiceImpl implements WebServiceInterface<Veiculo>{
 
-	private static ServiceInterface<Usuario> service;
+	private static ServiceInterface<Veiculo> service;
 
-	private static synchronized ServiceInterface<Usuario> getInstance() {
+	private static synchronized ServiceInterface<Veiculo> getInstance() {
 		if (service == null) {
-			service = new UsuarioServiceImpl();
+			service = new VeiculoServiceImpl();
 		}
 		return service;
 	}
-
+	
 	@Override
 	public void dataBinding(WebDataBinder binder) {
 		// TODO Auto-generated method stub
-
+		
 	}
 
 	@Override
-	@GetMapping("/listarUsuarioRest")
-	public List<Usuario> listar() {
+	@GetMapping("/listarVeiculoRest")
+	public List<Veiculo> listar() {
 		service = getInstance();
-		List<Usuario> listaUsuario = service.listar();
-		return listaUsuario;
+		List<Veiculo> listaVeiculo = service.listar();
+		return listaVeiculo;
 	}
 
 	@Override
-	@GetMapping("/carregarUsuarioRest/{id}")
-	public Usuario carregar(@PathVariable Integer id) {
+	@GetMapping("/carregarVeiculoRest/{id}")
+	public Veiculo carregar(@PathVariable Integer id) {
 		service = getInstance();
-		Usuario usuario = service.carregar(id);
-		return usuario;
+		Veiculo veiculo = service.carregar(id);
+		return veiculo;
 	}
 
 	@Override
-	@PutMapping("/salvarUsuarioRest")
-	public void salvar(@RequestBody Usuario usuario) {
+	@PutMapping("/salvarVeiculoRest")
+	public void salvar(@RequestBody Veiculo veiculo) {
 		service = getInstance();
-		service.salvar(usuario);
-
+		service.salvar(veiculo);
 	}
 
 	@Override
-	@DeleteMapping("/excluirUsuarioRest/{id}")
+	@DeleteMapping("/excluirVeiculoRest/{id}")
 	public void excluir(@PathVariable Integer id) {
 		service = getInstance();
 		service.excluir((Integer[]) Arrays.asList(id).toArray());
 	}
+
 }
