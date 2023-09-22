@@ -1,9 +1,5 @@
 package br.com.controle.portaria.controller.web.impl;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-
 import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
@@ -15,19 +11,27 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import br.com.controle.portaria.controller.web.WebControllerInterface;
-import br.com.controle.portaria.database.GenericDao;
 import br.com.controle.portaria.model.ImovelCondominio;
+import br.com.controle.portaria.model.Pessoa;
+import br.com.controle.portaria.services.ServiceInterface;
+import br.com.controle.portaria.services.impl.ImovelCondominioServiceImpl;
+import br.com.controle.portaria.services.impl.PessoaServiceImpl;
 
 @Controller
 public class ImovelCondominioControllerImpl implements WebControllerInterface<ImovelCondominio>{
 	
-	private static GenericDao<ImovelCondominio> dao;
+	private static ServiceInterface<ImovelCondominio> service;	
+	private static ServiceInterface<Pessoa> servicePessoa;
 
-    private static synchronized GenericDao<ImovelCondominio> getInstance() {
-        if (dao == null || dao.isSessionClosed()) {
-        	dao = new GenericDao<ImovelCondominio>();
+    private static synchronized ServiceInterface<ImovelCondominio> getInstance() {
+        if (service == null) {
+        	service = new ImovelCondominioServiceImpl();
         }
-        return dao;
+        return service;
+    }
+    
+    private static synchronized ServiceInterface<Pessoa> getInstancePessoa() {
+        return servicePessoa == null ? new PessoaServiceImpl() : servicePessoa;
     }
 
 	@Override
@@ -41,29 +45,21 @@ public class ImovelCondominioControllerImpl implements WebControllerInterface<Im
 	public String listar(Model model) {
 		System.out.println(this.getClass().getName() + "#############listar#########");
 
-		model.addAttribute("listImovelCondominio", getListaImovelCondominio());
-		model.addAttribute("listPessoa", new PessoaControllerImpl().getListaPessoa());
+		service = getInstance();
+		model.addAttribute("listImovelCondominio", getInstance().listar());
+		model.addAttribute("listPessoa", getInstancePessoa().listar());
 				
 		return "cadastroImovelCondominioForm";
 	}
 	
-	public List<ImovelCondominio> getListaImovelCondominio() {
-		GenericDao<ImovelCondominio> dao = getInstance();		
-		List<ImovelCondominio> listaPessoa = new ArrayList<ImovelCondominio>();
-		listaPessoa = dao.listaTudo("from ImovelCondominio");
-		return listaPessoa;
-	}
-
 	@Override
 	@RequestMapping(value = "/carregarImovelCondominio", method = RequestMethod.GET)
 	public String carregar(@RequestParam("idImovelCondominio")Integer idImovelCondominio, Model model) {
 		System.out.println(this.getClass().getName() + "#############carregar#########");
 		
-		GenericDao<ImovelCondominio> dao = getInstance();	
 		ImovelCondominio imovelCondominio = new ImovelCondominio();
-		
 		if(idImovelCondominio != null){
-			imovelCondominio = dao.carrega(idImovelCondominio, ImovelCondominio.class);
+			imovelCondominio = getInstance().carregar(idImovelCondominio);
 			model.addAttribute("imovelCondominio", imovelCondominio);
 		}		
 		return listar(model);
@@ -75,8 +71,7 @@ public class ImovelCondominioControllerImpl implements WebControllerInterface<Im
 
 		System.out.println(this.getClass().getName() + "#############salvar#########");	
 		
-		GenericDao<ImovelCondominio> dao = getInstance();	
-		dao.adicionarOrAlterar(imovelCondominio);
+		getInstance().salvar(imovelCondominio);
 		model.addAttribute("imovelCondominio", imovelCondominio);
 		if (result.hasErrors()) {			
 			return "error";
@@ -88,21 +83,7 @@ public class ImovelCondominioControllerImpl implements WebControllerInterface<Im
 	@RequestMapping(value = "/excluirImovelCondominio", method = RequestMethod.POST)
 	public String excluir(@RequestParam("cds") Integer[] cds, Model model) {
 		System.out.println(this.getClass().getName() + "#############excluir#########");	
-		GenericDao<ImovelCondominio> dao = getInstance();	
-		Collection<ImovelCondominio> listaImovelCondominio = new ArrayList<ImovelCondominio>();	
-		
-		for(Integer i : cds ){			
-			ImovelCondominio imovelCondominio = new ImovelCondominio();			
-			if(i != null){
-				dao = getInstance();	
-				imovelCondominio = dao.carrega(i, ImovelCondominio.class);				
-			}				
-			if(!imovelCondominio.equals(null)){
-				listaImovelCondominio.add(imovelCondominio);
-			}			
-		}	
-		dao = getInstance();	
-		dao.excluir(listaImovelCondominio);
+		getInstance().excluir(cds);
 		
 		return listar(model);
 	}

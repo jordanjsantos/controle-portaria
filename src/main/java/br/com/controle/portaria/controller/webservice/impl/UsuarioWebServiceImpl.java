@@ -31,7 +31,6 @@ public class UsuarioWebServiceImpl implements WebServiceInterface<Usuario> {
 	@Override
 	public void dataBinding(WebDataBinder binder) {
 		// TODO Auto-generated method stub
-
 	}
 
 	@Override
