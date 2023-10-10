@@ -2,6 +2,7 @@ package br.com.controle.portaria.controller.web.impl;
 
 import java.util.List;
 
+import javax.inject.Inject;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
@@ -15,20 +16,13 @@ import org.springframework.web.bind.annotation.RequestParam;
 import br.com.controle.portaria.controller.web.WebControllerInterface;
 import br.com.controle.portaria.model.TipoPessoa;
 import br.com.controle.portaria.services.ServiceInterface;
-import br.com.controle.portaria.services.impl.TipoPessoaServiceImpl;
 
 @Controller
 public class TipoPessoaControllerImpl implements WebControllerInterface<TipoPessoa>{
 	
-	private static ServiceInterface<TipoPessoa> service;
-
-    private static synchronized ServiceInterface<TipoPessoa> getInstance() {
-        if (service == null) {
-        	service = new TipoPessoaServiceImpl();
-        }
-        return service;
-    }
-
+	@Inject
+	private ServiceInterface<TipoPessoa> service;
+	
 	@Override
 	public void dataBinding(WebDataBinder binder) {
 		// TODO Auto-generated method stub
@@ -37,7 +31,7 @@ public class TipoPessoaControllerImpl implements WebControllerInterface<TipoPess
 	@Override
 	@RequestMapping(value="/tipoPessoa")
 	public String listar(Model model) {
-		service = getInstance();
+		//service = getInstance();
 		List<TipoPessoa> listaTipoPessoa = service.listar();
 		model.addAttribute("listTipoPessoa", listaTipoPessoa);		
 		return "cadastroTipoPessoaForm";
@@ -48,8 +42,8 @@ public class TipoPessoaControllerImpl implements WebControllerInterface<TipoPess
 	public String carregar(@RequestParam("idTipoPessoa")Integer idTipoPessoa, Model model) {
 		TipoPessoa tipoPessoa = new TipoPessoa();
 		if(idTipoPessoa != null){
-			service = getInstance();
-			tipoPessoa = service.carregar(idTipoPessoa);
+			//service = getInstance();
+			tipoPessoa = (TipoPessoa) service.carregar(idTipoPessoa);
 			model.addAttribute("tipoPessoa", tipoPessoa);
 		}		
 		return listar(model);
@@ -58,7 +52,7 @@ public class TipoPessoaControllerImpl implements WebControllerInterface<TipoPess
 	@Override
 	@RequestMapping(value = "/salvarTipoPessoa", method = RequestMethod.POST)
 	public String salvar(TipoPessoa tipoPessoa, BindingResult result, Model model, HttpSession session) {
-		service = getInstance();
+		//service = getInstance();
 		service.salvar(tipoPessoa);
 		model.addAttribute("tipoPessoa", tipoPessoa);
 		if (result.hasErrors()) {			
@@ -70,7 +64,7 @@ public class TipoPessoaControllerImpl implements WebControllerInterface<TipoPess
 	@Override
 	@RequestMapping(value = "/excluirTipoPessoa", method = RequestMethod.POST)
 	public String excluir(@RequestParam("cds") Integer[] cds, Model model) {
-		service = getInstance();
+		//service = getInstance();
 		service.excluir(cds);
 		return listar(model);
 	}

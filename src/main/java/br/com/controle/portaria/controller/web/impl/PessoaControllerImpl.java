@@ -3,6 +3,7 @@ package br.com.controle.portaria.controller.web.impl;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.inject.Inject;
 import javax.servlet.http.HttpSession;
 
 import org.codehaus.jackson.map.ObjectMapper;
@@ -19,19 +20,12 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import br.com.controle.portaria.controller.web.WebControllerInterface;
 import br.com.controle.portaria.model.Pessoa;
 import br.com.controle.portaria.services.ServiceInterfaceAbstract;
-import br.com.controle.portaria.services.impl.PessoaServiceImpl;
 
 @Controller
 public class PessoaControllerImpl implements WebControllerInterface<Pessoa>{
 	
-	private static ServiceInterfaceAbstract<Pessoa> pessoaService;
-
-    private static synchronized ServiceInterfaceAbstract<Pessoa> getInstance() {
-        if (pessoaService == null) {
-        	pessoaService = new PessoaServiceImpl();
-        }
-        return pessoaService;
-    }
+	@Inject
+	private ServiceInterfaceAbstract<Pessoa> pessoaService;
 
 	@Override
 	public void dataBinding(WebDataBinder binder) {
@@ -50,7 +44,7 @@ public class PessoaControllerImpl implements WebControllerInterface<Pessoa>{
 	
 	public List<Pessoa> getListaPessoa() {
 		List<Pessoa> listaPessoa = new ArrayList<Pessoa>();
-		listaPessoa = getInstance().listar();;
+		listaPessoa = pessoaService.listar();;
 		return listaPessoa;
 	}
 
@@ -62,7 +56,7 @@ public class PessoaControllerImpl implements WebControllerInterface<Pessoa>{
 		Pessoa pessoa = new Pessoa();
 		
 		if(idPessoa != null){
-			pessoa = getInstance().carregar(idPessoa);
+			pessoa = pessoaService.carregar(idPessoa);
 			model.addAttribute("pessoa", pessoa);
 		}		
 		return listar(model);
@@ -76,7 +70,7 @@ public class PessoaControllerImpl implements WebControllerInterface<Pessoa>{
 		List<Pessoa> listPessoa = new ArrayList<Pessoa>();
 		
 		if(nome != null && !"".equals(nome)){
-			listPessoa = getInstance().carregar("nome");
+			listPessoa = pessoaService.carregar("nome");
 			model.addAttribute("listPessoa", listPessoa);
 			ObjectWriter ow = new ObjectMapper().writer().withDefaultPrettyPrinter();
 			try {
@@ -93,7 +87,7 @@ public class PessoaControllerImpl implements WebControllerInterface<Pessoa>{
 	public String salvar(Pessoa pessoa, BindingResult result, Model model, HttpSession session) {
 
 		System.out.println(this.getClass().getName() + "#############salvar#########");	
-		getInstance().salvar(pessoa);
+		pessoaService.salvar(pessoa);
 		model.addAttribute("pessoa", pessoa);
 		if (result.hasErrors()) {			
 			return "error";
@@ -105,7 +99,7 @@ public class PessoaControllerImpl implements WebControllerInterface<Pessoa>{
 	@RequestMapping(value = "/excluirPessoa", method = RequestMethod.POST)
 	public String excluir(@RequestParam("cds") Integer[] cds, Model model) {
 		System.out.println(this.getClass().getName() + "#############excluir#########");	
-		getInstance().excluir(cds);
+		pessoaService.excluir(cds);
 		return listar(model);
 	}
 }

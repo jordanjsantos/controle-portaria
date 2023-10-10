@@ -1,5 +1,6 @@
 package br.com.controle.portaria.controller.web.impl;
 
+import javax.inject.Inject;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
@@ -14,22 +15,22 @@ import br.com.controle.portaria.controller.web.WebControllerInterface;
 import br.com.controle.portaria.model.Pessoa;
 import br.com.controle.portaria.model.Veiculo;
 import br.com.controle.portaria.services.ServiceInterface;
-import br.com.controle.portaria.services.impl.PessoaServiceImpl;
-import br.com.controle.portaria.services.impl.VeiculoServiceImpl;
 
 @Controller
 public class VeiculoControllerImpl implements WebControllerInterface<Veiculo> {
 
-	private static ServiceInterface<Veiculo> service;
-	private static ServiceInterface<Pessoa> servicePessoa;
+	@Inject
+	private ServiceInterface<Veiculo> service;
+	@Inject
+	private ServiceInterface<Pessoa> servicePessoa;
 
-	private static synchronized ServiceInterface<Veiculo> getInstance() {
-		return service == null ? new VeiculoServiceImpl() : service;
-	}
-
-	private static synchronized ServiceInterface<Pessoa> getInstancePessoa() {
-		return servicePessoa == null ? new PessoaServiceImpl() : servicePessoa;
-	}
+//	private static synchronized ServiceInterface<Veiculo> getInstance() {
+//		return service == null ? new VeiculoServiceImpl() : service;
+//	}
+//
+//	private static synchronized ServiceInterface<Pessoa> getInstancePessoa() {
+//		return servicePessoa == null ? new PessoaServiceImpl() : servicePessoa;
+//	}
 
 	@Override
 	public void dataBinding(WebDataBinder binder) {
@@ -42,9 +43,9 @@ public class VeiculoControllerImpl implements WebControllerInterface<Veiculo> {
 	public String listar(Model model) {
 		System.out.println(this.getClass().getName() + "#############listar#########");
 
-		model.addAttribute("listVeiculo", getInstance().listar());
+		model.addAttribute("listVeiculo", service.listar());
 
-		model.addAttribute("listPessoa", getInstancePessoa().listar());
+		model.addAttribute("listPessoa", servicePessoa.listar());
 
 		return "cadastroVeiculoForm";
 	}
@@ -54,7 +55,7 @@ public class VeiculoControllerImpl implements WebControllerInterface<Veiculo> {
 	public String carregar(@RequestParam("idVeiculo") Integer idVeiculo, Model model) {
 		System.out.println(this.getClass().getName() + "#############carregar#########");
 
-		model.addAttribute("veiculo", getInstance().carregar(idVeiculo));
+		model.addAttribute("veiculo", service.carregar(idVeiculo));
 		return listar(model);
 	}
 
@@ -63,7 +64,7 @@ public class VeiculoControllerImpl implements WebControllerInterface<Veiculo> {
 	public String salvar(Veiculo veiculo, BindingResult result, Model model, HttpSession session) {
 
 		System.out.println(this.getClass().getName() + "#############salvar#########");
-		getInstance().salvar(veiculo);
+		service.salvar(veiculo);
 		model.addAttribute("veiculo", veiculo);
 		
 		if (result.hasErrors()) {
@@ -76,7 +77,7 @@ public class VeiculoControllerImpl implements WebControllerInterface<Veiculo> {
 	@RequestMapping(value = "/excluirVeiculo", method = RequestMethod.POST)
 	public String excluir(@RequestParam("cds") Integer[] cds, Model model) {
 		System.out.println(this.getClass().getName() + "#############excluir#########");
-		getInstance().excluir(cds);
+		service.excluir(cds);
 		return listar(model);
 	}
 }

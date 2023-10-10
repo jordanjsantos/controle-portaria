@@ -4,11 +4,14 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
+import org.springframework.stereotype.Service;
+
 import br.com.controle.portaria.database.GenericDao;
 import br.com.controle.portaria.model.Pessoa;
 import br.com.controle.portaria.services.ServiceInterfaceAbstract;
 
 @SuppressWarnings("unchecked")
+@Service("pessoaServiceImpl")
 public class PessoaServiceImpl extends ServiceInterfaceAbstract<Pessoa> {
 
 	@Override

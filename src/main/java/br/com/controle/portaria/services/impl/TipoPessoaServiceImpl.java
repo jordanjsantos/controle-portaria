@@ -4,12 +4,17 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Service;
+
 import br.com.controle.portaria.database.GenericDao;
 import br.com.controle.portaria.model.TipoPessoa;
 import br.com.controle.portaria.services.ServiceInterfaceAbstract;
 
 
 @SuppressWarnings("unchecked")
+@Qualifier("TipoPessoaServiceImpl")
+@Service("tipoPessoaServiceImpl")
 public class TipoPessoaServiceImpl extends ServiceInterfaceAbstract<TipoPessoa> {
 	
 	@Override

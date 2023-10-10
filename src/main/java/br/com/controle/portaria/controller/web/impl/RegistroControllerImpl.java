@@ -1,12 +1,6 @@
 package br.com.controle.portaria.controller.web.impl;
 
-import java.time.LocalDateTime;
-import java.time.ZoneId;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Date;
-import java.util.List;
-
+import javax.inject.Inject;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
@@ -18,20 +12,39 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import br.com.controle.portaria.controller.web.WebControllerInterface;
-import br.com.controle.portaria.database.GenericDao;
 import br.com.controle.portaria.model.ControleRegistro;
+import br.com.controle.portaria.model.ImovelCondominio;
+import br.com.controle.portaria.model.Pessoa;
 import br.com.controle.portaria.model.Usuario;
+import br.com.controle.portaria.services.ServiceInterface;
+import br.com.controle.portaria.services.ServiceInterfaceAbstract;
+import br.com.controle.portaria.services.impl.UsuarioServiceImpl;
 
 @Controller
 public class RegistroControllerImpl implements WebControllerInterface<ControleRegistro>{
 	
-	private static GenericDao<ControleRegistro> dao;
-
-    private static synchronized GenericDao<ControleRegistro> getInstance() {
-        if (dao == null || dao.isSessionClosed()) {
-        	dao = new GenericDao<ControleRegistro>();
-        }
-        return dao;
+//	private static GenericDao<ControleRegistro> dao;
+//
+//    private static synchronized GenericDao<ControleRegistro> getInstance() {
+//        if (dao == null || dao.isSessionClosed()) {
+//        	dao = new GenericDao<ControleRegistro>();
+//        }
+//        return dao;
+//    }
+	
+	@Inject
+	private ServiceInterfaceAbstract<ControleRegistro> service;
+	
+	@Inject
+	private ServiceInterfaceAbstract<Pessoa> servicePessoa;
+	
+	@Inject
+	private ServiceInterface<ImovelCondominio> serviceImovel;	
+	
+	private static UsuarioServiceImpl serviceUsuario;
+	
+    private static synchronized UsuarioServiceImpl getInstance() {
+        return serviceUsuario == null ? new UsuarioServiceImpl() : serviceUsuario;
     }
 
 	@Override
@@ -45,15 +58,10 @@ public class RegistroControllerImpl implements WebControllerInterface<ControleRe
 	public String listar(Model model) {
 		System.out.println(this.getClass().getName() + "#############listar#########");
 
-		GenericDao<ControleRegistro> dao = getInstance();		
-		List<ControleRegistro> listaControleRegistro = new ArrayList<ControleRegistro>();
-		listaControleRegistro = dao.listaTudo("from ControleRegistro");
-		
-		model.addAttribute("listControleRegistro", listaControleRegistro);
-		
-		//model.addAttribute("listUsuario", new UsuarioControllerImpl().getListaUsuario());
-		model.addAttribute("listPessoa", new PessoaControllerImpl().getListaPessoa());
-		//model.addAttribute("listImovelCond", new ImovelCondominioControllerImpl().getListaImovelCondominio());
+		model.addAttribute("listControleRegistro", service.listar());
+		model.addAttribute("listUsuario", getInstance().listar());
+		model.addAttribute("listPessoa", servicePessoa.listar());
+		model.addAttribute("listImovelCond", serviceImovel.listar());
 				
 		return "cadastroControleRegistroForm";
 	}
@@ -65,12 +73,8 @@ public class RegistroControllerImpl implements WebControllerInterface<ControleRe
 										Integer idControleRegistro, Model model) {
 		System.out.println(this.getClass().getName() + "#############carregar#########");
 		
-		GenericDao<ControleRegistro> dao = getInstance();	
-		ControleRegistro controleRegistro = new ControleRegistro();
-		
 		if(idControleRegistro != null){
-			controleRegistro = dao.carrega(idControleRegistro, ControleRegistro.class);
-			model.addAttribute("controleRegistro", controleRegistro);
+			model.addAttribute("controleRegistro", service.carregar(idControleRegistro));
 		}		
 		return listar(model);
 	}
@@ -81,19 +85,9 @@ public class RegistroControllerImpl implements WebControllerInterface<ControleRe
 
 		System.out.println(this.getClass().getName() + "#############salvar#########");	
 		
-		GenericDao<ControleRegistro> dao = getInstance();	
-		
 		Usuario userTemp = (Usuario) session.getAttribute("usuarioLogado");
-		Usuario usuarioFinal = new UsuarioControllerImpl().obterUsuarioPorLogin(userTemp.getUser());
+		service.salvar(controleRegistro, userTemp);
 		
-		controleRegistro.setDataHoraReg(
-				Date.from(LocalDateTime.now()
-					      .atZone(ZoneId.systemDefault())
-					      .toInstant()));			
-				
-		controleRegistro.setUsuario(usuarioFinal);
-		
-		dao.adicionarOrAlterar(controleRegistro);
 		model.addAttribute("controleRegistro", controleRegistro);
 		if (result.hasErrors()) {			
 			return "error";
@@ -105,21 +99,7 @@ public class RegistroControllerImpl implements WebControllerInterface<ControleRe
 	@RequestMapping(value = "/excluirControleRegistro", method = RequestMethod.POST)
 	public String excluir(@RequestParam("cds") Integer[] cds, Model model) {
 		System.out.println(this.getClass().getName() + "#############excluir#########");	
-		GenericDao<ControleRegistro> dao = getInstance();	
-		Collection<ControleRegistro> listaControleRegistro = new ArrayList<ControleRegistro>();	
-		
-		for(Integer i : cds ){			
-			ControleRegistro controleRegistro = new ControleRegistro();			
-			if(i != null){
-				dao = getInstance();	
-				controleRegistro = dao.carrega(i, ControleRegistro.class);				
-			}				
-			if(!controleRegistro.equals(null)){
-				listaControleRegistro.add(controleRegistro);
-			}			
-		}	
-		dao = getInstance();	
-		dao.excluir(listaControleRegistro);
+		service.excluir(cds);
 		
 		return listar(model);
 	}
