@@ -1,14 +1,11 @@
-package br.com.controle.portaria.controller;
+package br.com.controle.portaria.controller.web.impl;
 
-import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 
+import javax.inject.Inject;
 import javax.servlet.http.HttpSession;
 
-import org.codehaus.jackson.JsonGenerationException;
-import org.codehaus.jackson.map.JsonMappingException;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.codehaus.jackson.map.ObjectWriter;
 import org.springframework.stereotype.Controller;
@@ -20,45 +17,34 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import br.com.controle.portaria.database.GenericDao;
+import br.com.controle.portaria.controller.web.WebControllerInterface;
 import br.com.controle.portaria.model.Pessoa;
+import br.com.controle.portaria.services.ServiceInterfaceAbstract;
 
 @Controller
-public class PessoaController implements InterfaceCadastroController<Pessoa>{
+public class PessoaControllerImpl implements WebControllerInterface<Pessoa>{
 	
-	private static GenericDao<Pessoa> dao;
-
-    private static synchronized GenericDao<Pessoa> getInstance() {
-        if (dao == null || dao.isSessionClosed()) {
-        	dao = new GenericDao<Pessoa>();
-        }
-        return dao;
-    }
+	@Inject
+	private ServiceInterfaceAbstract<Pessoa> pessoaService;
 
 	@Override
 	public void dataBinding(WebDataBinder binder) {
 		// TODO Auto-generated method stub
-		
 	}
 
 	@Override
 	@RequestMapping(value="/pessoa")
 	public String listar(Model model) {
 		System.out.println(this.getClass().getName() + "#############listar#########");
-
 		List<Pessoa> listaPessoa = getListaPessoa();
-		
 		model.addAttribute("listPessoa", listaPessoa);
-		
-		model.addAttribute("listTipoPessoa", new TipoPessoaController().getListaTipoPessoa());
 		
 		return "cadastroPessoaForm";
 	}
 	
 	public List<Pessoa> getListaPessoa() {
-		GenericDao<Pessoa> dao = getInstance();		
 		List<Pessoa> listaPessoa = new ArrayList<Pessoa>();
-		listaPessoa = dao.listaTudo("from Pessoa");
+		listaPessoa = pessoaService.listar();;
 		return listaPessoa;
 	}
 
@@ -67,11 +53,10 @@ public class PessoaController implements InterfaceCadastroController<Pessoa>{
 	public String carregar(@RequestParam("idPessoa")Integer idPessoa, Model model) {
 		System.out.println(this.getClass().getName() + "#############carregar#########");
 		
-		GenericDao<Pessoa> dao = getInstance();	
 		Pessoa pessoa = new Pessoa();
 		
 		if(idPessoa != null){
-			pessoa = dao.carrega(idPessoa, Pessoa.class);
+			pessoa = pessoaService.carregar(idPessoa);
 			model.addAttribute("pessoa", pessoa);
 		}		
 		return listar(model);
@@ -82,11 +67,10 @@ public class PessoaController implements InterfaceCadastroController<Pessoa>{
 	public String carregar(@RequestParam("nome")String nome, Model model) {
 		System.out.println(this.getClass().getName() + "#############carregar#########");
 		
-		GenericDao<Pessoa> dao = getInstance();	
 		List<Pessoa> listPessoa = new ArrayList<Pessoa>();
 		
 		if(nome != null && !"".equals(nome)){
-			listPessoa = dao.busca("nome", nome, Pessoa.class);
+			listPessoa = pessoaService.carregar("nome");
 			model.addAttribute("listPessoa", listPessoa);
 			ObjectWriter ow = new ObjectMapper().writer().withDefaultPrettyPrinter();
 			try {
@@ -103,9 +87,7 @@ public class PessoaController implements InterfaceCadastroController<Pessoa>{
 	public String salvar(Pessoa pessoa, BindingResult result, Model model, HttpSession session) {
 
 		System.out.println(this.getClass().getName() + "#############salvar#########");	
-		
-		GenericDao<Pessoa> dao = getInstance();	
-		dao.adicionarOrAlterar(pessoa);
+		pessoaService.salvar(pessoa);
 		model.addAttribute("pessoa", pessoa);
 		if (result.hasErrors()) {			
 			return "error";
@@ -117,22 +99,7 @@ public class PessoaController implements InterfaceCadastroController<Pessoa>{
 	@RequestMapping(value = "/excluirPessoa", method = RequestMethod.POST)
 	public String excluir(@RequestParam("cds") Integer[] cds, Model model) {
 		System.out.println(this.getClass().getName() + "#############excluir#########");	
-		GenericDao<Pessoa> dao = getInstance();	
-		Collection<Pessoa> listaVeiculo = new ArrayList<Pessoa>();	
-		
-		for(Integer i : cds ){			
-			Pessoa veiculo = new Pessoa();			
-			if(i != null){
-				dao = getInstance();	
-				veiculo = dao.carrega(i, Pessoa.class);				
-			}				
-			if(!veiculo.equals(null)){
-				listaVeiculo.add(veiculo);
-			}			
-		}	
-		dao = getInstance();	
-		dao.excluir(listaVeiculo);
-		
+		pessoaService.excluir(cds);
 		return listar(model);
 	}
 }

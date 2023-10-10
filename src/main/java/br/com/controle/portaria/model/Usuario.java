@@ -15,8 +15,11 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+import io.swagger.annotations.ApiModel;
+
 @Entity
 @Table(name = "usuario")
+@ApiModel(value = "Usuario", description = "Usuario")
 public class Usuario implements Serializable {
 
 	private static final long serialVersionUID = 1L;
